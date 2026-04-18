@@ -1,65 +1,83 @@
-import Image from "next/image";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import { supabase } from "@/lib/supabase";
 
-export default function Home() {
+export default async function Home() {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (user) redirect("/dashboard");
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <main className="relative min-h-screen overflow-hidden bg-gradient-to-br from-sky-50 via-indigo-50 to-fuchsia-50 text-slate-800">
+      {/* Background decorative gradients */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -top-32 -left-20 h-96 w-96 rounded-full bg-cyan-200/40 blur-3xl" />
+        <div className="absolute top-20 right-0 h-80 w-80 rounded-full bg-violet-200/40 blur-3xl" />
+        <div className="absolute -bottom-24 left-1/3 h-96 w-96 rounded-full bg-pink-200/40 blur-3xl" />
+      </div>
+
+      <section className="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col items-center justify-center px-6 py-16 text-center">
+        {/* Hero */}
+        <div className="max-w-3xl space-y-6">
+          <span className="inline-flex items-center rounded-full border border-indigo-200 bg-white/70 px-4 py-1 text-xs font-bold text-indigo-700 shadow-sm backdrop-blur">
+            Build Content Faster with AI
+          </span>
+
+          <h1 className="text-4xl font-extrabold leading-tight sm:text-5xl md:text-6xl">
+            <span className="bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-600 bg-clip-text text-transparent">
+              AI Content Generator SaaS
+            </span>
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+
+          <p className="mx-auto max-w-2xl text-base text-slate-600 sm:text-lg">
+            Generate high-quality content instantly with powerful AI workflows.
+            Save, manage, and reuse your prompts from a clean, modern dashboard.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+
+        {/* CTA Buttons */}
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <Link
+            href="/signup"
+            className="rounded-xl bg-gradient-to-r from-indigo-500 via-violet-500 to-fuchsia-500 px-7 py-3 font-semibold text-white shadow-lg shadow-indigo-200 transition hover:brightness-110 active:scale-[0.99]"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            Get Started
+          </Link>
+
+          <Link
+            href="/login"
+            className="rounded-xl border border-indigo-200 bg-white/80 px-7 py-3 font-semibold text-indigo-700 shadow-sm backdrop-blur transition hover:bg-white"
           >
-            Documentation
-          </a>
+            Login
+          </Link>
         </div>
-      </main>
-    </div>
+
+        {/* Features */}
+        <div className="mt-14 grid w-full max-w-5xl gap-5 md:grid-cols-3">
+          <div className="rounded-2xl border border-white/70 bg-white/75 p-6 text-left shadow-[0_8px_30px_rgba(99,102,241,0.12)] backdrop-blur">
+            <h3 className="text-lg font-semibold text-slate-800">AI Generation</h3>
+            <p className="mt-2 text-sm text-slate-600">
+              Turn simple prompts into polished content in seconds.
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-white/70 bg-white/75 p-6 text-left shadow-[0_8px_30px_rgba(139,92,246,0.12)] backdrop-blur">
+            <h3 className="text-lg font-semibold text-slate-800">Save History</h3>
+            <p className="mt-2 text-sm text-slate-600">
+              Keep every generation organized and ready to reuse.
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-white/70 bg-white/75 p-6 text-left shadow-[0_8px_30px_rgba(236,72,153,0.12)] backdrop-blur">
+            <h3 className="text-lg font-semibold text-slate-800">Secure Access</h3>
+            <p className="mt-2 text-sm text-slate-600">
+              Authentication keeps your projects and data protected.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }
