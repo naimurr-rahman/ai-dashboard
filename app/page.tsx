@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { supabase } from "@/lib/supabase";
+import { getSupabaseClient } from "@/lib/supabase";
 
 export default async function Home() {
+  const supabase = getSupabaseClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
