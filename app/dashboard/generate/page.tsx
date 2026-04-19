@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { supabase } from "@/lib/supabase";
+import { getSupabaseClient } from "@/lib/supabase";
 
 export default function Generate() {
+    const supabase = getSupabaseClient();
+
     const [prompt, setPrompt] = useState("");
     const [result, setResult] = useState("");
     const [loading, setLoading] = useState(false);

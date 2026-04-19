@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { supabase } from "@/lib/supabase";
+import { getSupabaseClient } from "@/lib/supabase";
 
 type Generation = {
     id: string;
@@ -12,6 +12,7 @@ type Generation = {
 };
 
 export default function History() {
+    const supabase = getSupabaseClient();
     const [items, setItems] = useState<Generation[]>([]);
     const [loading, setLoading] = useState(true);
 

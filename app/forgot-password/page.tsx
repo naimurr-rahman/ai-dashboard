@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { supabase } from "@/lib/supabase";
+import { getSupabaseClient } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 
 export default function ForgotPassword() {
+    const supabase = getSupabaseClient();
     const router = useRouter();
 
     const [email, setEmail] = useState("");
