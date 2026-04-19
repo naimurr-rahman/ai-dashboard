@@ -2,12 +2,16 @@ import OpenAI from "openai";
 
 export const runtime = "nodejs";
 
-const client = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY!,
-});
-
 export async function POST(req: Request) {
     try {
+        if (!process.env.OPENAI_API_KEY) {
+            throw new Error("OPENAI_API_KEY is not set");
+        }
+
+        const client = new OpenAI({
+            apiKey: process.env.OPENAI_API_KEY,
+        });
+
         const { prompt } = await req.json();
 
         if (!prompt) {
@@ -23,7 +27,7 @@ export async function POST(req: Request) {
         });
 
         return Response.json({
-            text: `Mock response for prompt: ${prompt}`,
+            text: response.output_text,
         });
     } catch (err: any) {
         console.error(err);
